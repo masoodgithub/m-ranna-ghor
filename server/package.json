@@ -1,7 +1,7 @@
 {
   "name": "m-ranna-ghor-backend",
   "version": "1.0.0",
-  "description": "Backend for M Ranna Ghor Catering",
+  "description": "Backend for M Kitchen Catering",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
