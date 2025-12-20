@@ -15,10 +15,13 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
+import CartIcon from './CartIcon';
+import { useCart } from '../contexts/CartContext';
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
+  const { itemCount } = useCart();
 
   const navItems = [
     { name: 'Home', path: '/' },
@@ -35,20 +38,21 @@ const Navbar = () => {
     <Box onClick={handleDrawerToggle} sx={{ width: 250 }}>
       <List>
         {navItems.map((item) => (
-          <Typography
-  variant="h6"
-  component={Link}
-  to="/"
-  sx={{
-    textDecoration: 'none',
-    color: 'white',
-    fontWeight: 'bold',
-    fontFamily: 'cursive',
-  }}
->
-  M Kitchen
-</Typography>
+          <ListItem
+            key={item.name}
+            component={Link}
+            to={item.path}
+            sx={{
+              color: location.pathname === item.path ? '#8B0000' : 'inherit',
+              fontWeight: location.pathname === item.path ? 'bold' : 'normal',
+            }}
+          >
+            <ListItemText primary={item.name} />
+          </ListItem>
         ))}
+        <ListItem component={Link} to="/cart" onClick={handleDrawerToggle}>
+          <ListItemText primary={`Cart (${itemCount})`} />
+        </ListItem>
       </List>
     </Box>
   );
@@ -77,7 +81,7 @@ const Navbar = () => {
             </Box>
 
             {/* Desktop Navigation */}
-            <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 2 }}>
+            <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 2, alignItems: 'center' }}>
               {navItems.map((item) => (
                 <Button
                   key={item.name}
@@ -106,6 +110,7 @@ const Navbar = () => {
               >
                 Order Now
               </Button>
+              <CartIcon />
             </Box>
 
             {/* Mobile Menu Button */}
